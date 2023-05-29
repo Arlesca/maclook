@@ -1,5 +1,5 @@
 # maclook - Simple MAC lookup
-Simple MAC lookup tool. Uses wireshark's [register](https://gitlab.com/wireshark/wireshark/raw/master/manuf)
+Simple MAC lookup tool. Uses wireshark's [register](https://gitlab.com/wireshark/wireshark/raw/master/manuf).
 
 ## Example:
 ```powershell
