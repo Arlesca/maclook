@@ -4,6 +4,7 @@ param(
 )
 
 # Store MAC registry in a string
+# TODO: Takes a lot of memory. Find a more efficient way!
 $macreg = (Invoke-WebRequest -Uri "https://gitlab.com/wireshark/wireshark/raw/master/manuf").Content
 
 # Reformat provided MAC adress
