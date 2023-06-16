@@ -19,8 +19,6 @@ $mac = $mac.Insert(8, ":")
 $mac = $mac.Insert(11, ":")
 $mac = $mac.Insert(14, ":")
 
-Write-Host $mac
-
 $vndrid = $mac.SubString(0, 8)
 
 # Iterate though each line of the registry string
