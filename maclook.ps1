@@ -8,17 +8,14 @@ param(
 $macreg = (Invoke-WebRequest -Uri "https://gitlab.com/wireshark/wireshark/raw/master/manuf").Content
 
 # Reformat provided MAC adress
-# TODO: Make this better, loops?
-$mac = $mac.Replace(",", "")
-$mac = $mac.Replace(".", "")
-$mac = $mac.Replace(":", "")
+# With regex
+$mac = ($mac -replace '[.,:]')
 
-$mac = $mac.Insert(2, ":")
-$mac = $mac.Insert(5, ":")
-$mac = $mac.Insert(8, ":")
-$mac = $mac.Insert(11, ":")
-$mac = $mac.Insert(14, ":")
+for ($i = 2; $i -le 14; $i += 3) {
+	$mac = $mac.Insert($i, ":")
+}
 
+# Write-Host $mac
 $vndrid = $mac.SubString(0, 8)
 
 # Iterate though each line of the registry string
