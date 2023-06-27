@@ -1,5 +1,6 @@
 param(
 	# MAC Address:
+	[Parameter(Mandatory=$true)]
 	[String]$mac
 )
 
