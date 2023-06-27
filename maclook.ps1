@@ -3,12 +3,12 @@ param(
 	[String]$mac
 )
 
-# Store MAC registry in a string
-# TODO: Takes a lot of memory. Find a more efficient way!
-$macreg = (Invoke-WebRequest -Uri "https://gitlab.com/wireshark/wireshark/raw/master/manuf").Content
+# Store MAC registry in a temporary file
+$manuf = New-TemporaryFile
+(Invoke-WebRequest -Uri "https://gitlab.com/wireshark/wireshark/raw/master/manuf").Content | Out-File $manuf
 
 # Reformat provided MAC adress
-$mac = ($mac -replace '[.,:]')
+$mac = ($mac -replace '[^a-zA-Z0-9]')
 
 for ($i = 2; $i -le 14; $i += 3) {
 	$mac = $mac.Insert($i, ":")
@@ -16,8 +16,8 @@ for ($i = 2; $i -le 14; $i += 3) {
 
 $vndrid = $mac.SubString(0, 8)
 
-# Iterate though each line of the registry string
-foreach ($line in ($macreg -split "\n")) {
+# Iterate though each line of the 'manuf' file
+foreach ($line in Get-Content $manuf) {
 	# If the line starts with '#' or is empty it is skipped
 	if ( -not ($line.StartsWith("#")) -and ($line.length -ne 0)) {
 		# Get vendor ID from the current line
